@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=, initial-scale=1.0" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <title>Einkommensteuerrechner</title>
+  </head>
+  <body>
+    <section>
+      <h1>Einkommensteuerrechner</h1>
+      <form action="return false">
+        <div>
+          <label>Jahr</label>
+          <select id="year" name="year">
+            <option value="2020">2020</option>
+            <option value="2019" selected>2019</option>
+            <option value="2018">2018</option>
+          </select>
+        </div>
+
+        <div class="display-flex">
+          <div class="left"><p>Art der Veranlagung</p></div>
+          <div class="right">
+            <input
+              type="radio"
+              id="single"
+              name="assessment-type"
+              value="single"
+            />
+            <label for="single">Einzelveranlagung</label><br />
+
+            <input
+              type="radio"
+              id="couple"
+              name="assessment-type"
+              value="couple"
+            />
+            <label for="couple">Zusammenveranlagung</label><br />
+          </div>
+        </div>
+
+        <label>zu versteurndes Einkommen</label>
+        <input type="text" id="profit" name="profit" /> Euro
+
+        <div>
+        <label>Kirchensteuer</label>
+          <select id="k-steuer" name="k-steuer">
+            <option value="0" selected>keine</option>
+            <option value="8" >8% (Bayern / BaWü) </option>
+            <option value="9">9 (übrige)</option>
+          </select>
+        </div>
+      </form>
+
+      <a href="#" class="btn" onclick="calculateTax()">Berechnen</a>
+    </section>
+
+    <div class="display-flex">
+      <div class="left"><p>Einkommensteuer:</p></div>
+      <div class="right" id="result">12345EUR</div>
+    </div>
+
+    <div class="display-flex">
+        <div class="left"><p>Solidaritätszuschlag:</p></div>
+        <div class="right" id="soli">12345EUR</div>
+    </div>
+
+    <div class="display-flex">
+        <div class="left"><p>Kirchensteuer:</p></div>
+        <div class="right" id="kirche">12345EUR</div>
+    </div>
+
+
+
+    <script>
+      function calculateTax() {
+        let taxYear = parseInt(document.getElementById("year").value)
+        let assessmentType = document.querySelector("input[name=assessment-type]:checked").value
+        let taxableIncome = parseInt(document.getElementById("profit").value)
+        let kirchensteuerRate = parseInt(document.getElementById("k-steuer").value)
+        let taxLiability;
+        let soli;
+        let kirchensteuer;
+        
+        
+
+        if (assessmentType === "couple") {
+          taxableIncome /= 2;
+        }
+
+switch(taxYear) {
+    case 2020: {
+        if (taxableIncome <= 9408) {
+            taxLiability = 0;
+          } else if (taxableIncome >= 9409 && taxableIncome <= 14532) {
+            let y = (taxableIncome - 9408) / 10000;
+            taxLiability = (972.87 * y + 1400) * y;
+          } else if (taxableIncome >= 14533 && taxableIncome <= 57051) {
+            let z = (taxableIncome - 14532) / 10000;
+            taxLiability = (212.02 * z + 2397) * z + 972.79;
+          } else if (taxableIncome >= 57052 && taxableIncome <= 270500) {
+            taxLiability = 0.42 * taxableIncome - 8963.74;
+          } else if (taxableIncome >= 270501) {
+            taxLiability = 0.45 * taxableIncome - 17078.74;
+          }
+    break;
+    }
+    case 2019: {
+        if (taxableIncome <= 9168) {
+            taxLiability = 0;
+          } else if (taxableIncome >= 9169 && taxableIncome <= 14254) {
+            let y = (taxableIncome - 9168) / 10000;
+            taxLiability = (980.14 * y + 1400) * y;
+          } else if (taxableIncome >= 14255 && taxableIncome <= 55960) {
+            let z = (taxableIncome - 14254) / 10000;
+            taxLiability = (216.06 * z + 2397) * z + 965.58;
+          } else if (taxableIncome >= 55961 && taxableIncome <= 265326) {
+            taxLiability = 0.42 * taxableIncome - 8780.9;
+          } else if (taxableIncome >= 265327) {
+            taxLiability = 0.45 * taxableIncome - 16740.68;
+          }
+    break;
+    }
+    case 2018: {
+        if (taxableIncome <= 9000) {
+            taxLiability = 0;
+          } else if (taxableIncome >= 9001 && taxableIncome <= 13996) {
+            let y = (taxableIncome - 9000) / 10000;
+            taxLiability = (997.8 * y + 1400) * y;
+          } else if (taxableIncome >= 13997 && taxableIncome <= 54949) {
+            let z = (taxableIncome - 13996) / 10000;
+            taxLiability = (220.13 * z + 2397) * z + 948.49;
+          } else if (taxableIncome >= 54950 && taxableIncome <= 260532) {
+            taxLiability = 0.42 * taxableIncome - 8621.75;
+          } else if (taxableIncome >= 260553) {
+            taxLiability = 0.45 * taxableIncome - 16437.7;
+          }
+    break;
+    }
+}
+        // Further Calculations
+        if (assessmentType === "couple") {
+          taxLiability *= 2;
+        }
+
+        soli = taxLiability * 0.055
+        kirchensteuer = taxLiability * (kirchensteuerRate / 100)
+
+        // Output to screen
+        document.getElementById("result").innerHTML = taxLiability.toFixed(0) + ' €'
+        document.getElementById('soli').innerHTML = soli.toFixed(0) + ' €'
+        document.getElementById('kirche').innerHTML = kirchensteuer.toFixed(0) + ' €'
+      } 
+    </script>
+  </body>
+</html>
