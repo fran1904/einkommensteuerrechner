@@ -4,72 +4,94 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=, initial-scale=1.0" />
     <link rel="stylesheet" href="assets/css/style.css" />
-    <title>Einkommensteuerrechner</title>
+    <script src="https://kit.fontawesome.com/08168b175b.js" crossorigin="anonymous"></script>
+    <title>SteuerHero</title>
+
   </head>
   <body>
-    <section>
-      <h1>Einkommensteuerrechner</h1>
+
+    <div>
+      
+
+
+
+      <!-- form area -->
+      <img src="assets/img/my-tax-rocket.svg" alt="rocket" class="rocket">
+      <h1>Einkommenssteuer berechnen<br>war noch nie so einfach</h1>
+      <p class="sub-title">Geben Sie unten Ihre Daten ein</p>
       <form action="return false">
         <div>
-          <label>Jahr</label>
-          <select id="year" name="year">
-            <option value="2020">2020</option>
-            <option value="2019" selected>2019</option>
-            <option value="2018">2018</option>
-          </select>
+
+        <div class="display-flex mb">
+
+            <div class="left jahr">Jahr</div>
+
+            <div class="right">
+                    <select id="year" name="year">
+                        <option value="2020">2020</option>
+                        <option value="2019" selected>2019</option>
+                        <option value="2018">2018</option>
+                    </select>
+                </div>
         </div>
 
-        <div class="display-flex">
-          <div class="left"><p>Art der Veranlagung</p></div>
+        <div class="display-flex mb">
+          <div class="left art">Art der Veranlagung</div>
           <div class="right">
-            <input
-              type="radio"
-              id="single"
-              name="assessment-type"
-              value="single"
-            />
-            <label for="single">Einzelveranlagung</label><br />
+                <input
+                type="radio"
+                id="single"
+                name="assessment-type"
+                value="single"
+                />
+                <label for="single">Einzelveranlagung</label><br />
 
-            <input
-              type="radio"
-              id="couple"
-              name="assessment-type"
-              value="couple"
-            />
-            <label for="couple">Zusammenveranlagung</label><br />
+                <input
+                type="radio"
+                id="couple"
+                name="assessment-type"
+                value="couple"
+                />
+                <label for="couple">Zusammenveranlagung</label>
           </div>
         </div>
 
-        <label>zu versteurndes Einkommen</label>
-        <input type="text" id="profit" name="profit" /> Euro
+        <div class="display-flex mb">
+            <div class="left einkommen">zu versteurndes Einkommen</div>
+            <div class="right input-icon"><input type="number" id="profit" name="profit"><i>€</i></div>
+        </div>
 
-        <div>
-        <label>Kirchensteuer</label>
-          <select id="k-steuer" name="k-steuer">
-            <option value="0" selected>keine</option>
-            <option value="8" >8% (Bayern / BaWü) </option>
-            <option value="9">9 (übrige)</option>
-          </select>
+        <div class="display-flex mb">
+            <div class="left kirche">Kirchensteuer</div>
+            <div class="right">
+                <select id="k-steuer" name="k-steuer">
+                    <option value="0" selected>keine</option>
+                    <option value="8" >8% (Bayern / BaWü) </option>
+                    <option value="9">9 (übrige)</option>
+                </select>
+            </div>
         </div>
       </form>
 
       <a href="#" class="btn" onclick="calculateTax()">Berechnen</a>
-    </section>
-
-    <div class="display-flex">
-      <div class="left"><p>Einkommensteuer:</p></div>
-      <div class="right" id="result">12345EUR</div>
     </div>
 
-    <div class="display-flex">
-        <div class="left"><p>Solidaritätszuschlag:</p></div>
-        <div class="right" id="soli">12345EUR</div>
+    <!-- end form area -->
+
+    <!-- result -->
+    <div class="display-flex mb">
+      <div class="left">Einkommensteuer:</div> <div class="right" id="result">12345EUR</div>
     </div>
 
-    <div class="display-flex">
-        <div class="left"><p>Kirchensteuer:</p></div>
+    <div class="display-flex mb">
+        <div class="left">Solidaritätszuschlag:</div>  <div class="right" id="soli"> 12345EUR</div>
+    </div>
+
+    <div class="display-flex mb">
+        <div class="left">Kirchensteuer:</div>
         <div class="right" id="kirche">12345EUR</div>
     </div>
+    <!-- / result -->
 
 
 
@@ -83,8 +105,6 @@
         let soli;
         let kirchensteuer;
         
-        
-
         if (assessmentType === "couple") {
           taxableIncome /= 2;
         }
@@ -139,15 +159,15 @@ switch(taxYear) {
     break;
     }
 }
-        // Further Calculations
+        // Zusammenveranlagung, Soli und KSt.
         if (assessmentType === "couple") {
           taxLiability *= 2;
         }
-
+        
         soli = taxLiability * 0.055
         kirchensteuer = taxLiability * (kirchensteuerRate / 100)
 
-        // Output to screen
+        // Output 
         document.getElementById("result").innerHTML = taxLiability.toFixed(0) + ' €'
         document.getElementById('soli').innerHTML = soli.toFixed(0) + ' €'
         document.getElementById('kirche').innerHTML = kirchensteuer.toFixed(0) + ' €'
