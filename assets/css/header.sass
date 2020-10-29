@@ -1,0 +1,33 @@
+@import 'variables';
+.social
+    color: #ffffff
+    font-size: 0.9rem
+    background: $primary
+    padding: 10px 0
+    i
+        margin-left: 12px
+        &:hover
+            color: lighten($secondary, 25%)
+    > div
+        justify-content: space-between
+
+// nav area
+.nav-area
+    justify-content: space-between
+    align-items: center
+    height: 80px
+    i
+        color: $primary
+        margin-right: 5px
+    div:nth-of-type(2)
+        a
+            transition: color .5s ease
+            &:hover
+                color: $secondary
+
+.logo
+    color: $primary
+    font-size: 1.5rem
+    font-weight: 700
+    span
+        color: $secondary

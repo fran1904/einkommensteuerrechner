@@ -1,0 +1,26 @@
+.container {
+  margin: 0 5%;
+}
+
+div.area-left, div.area-right {
+  width: 49%;
+}
+
+.display-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.mb {
+  margin-bottom: 24px;
+}
+
+div.left {
+  width: 49%;
+}
+
+div.right {
+  width: 49%;
+}
+/*# sourceMappingURL=layout.css.map */

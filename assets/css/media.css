@@ -1,0 +1,15 @@
+@media only screen and (max-width: 887px) {
+  div.content {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  div.area-right {
+    width: 100%;
+  }
+  div.area-left {
+    width: 100%;
+  }
+}
+/*# sourceMappingURL=media.css.map */

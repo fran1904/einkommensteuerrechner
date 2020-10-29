@@ -1,0 +1,25 @@
+html {
+  color: #404040;
+  font-family: "Montserrat", "Helvetica", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Montserrat", "Helvetica", sans-serif;
+  color: #1a1a1a;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 2.3rem;
+  margin-bottom: 18px;
+}
+
+h2 {
+  font-size: 1.25rem;
+}
+
+p {
+  font-family: #404040;
+  line-height: 2;
+}
+/*# sourceMappingURL=typography.css.map */
