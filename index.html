@@ -1,177 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=, initial-scale=1.0" />
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <script src="https://kit.fontawesome.com/08168b175b.js" crossorigin="anonymous"></script>
-    <title>SteuerHero</title>
-
-  </head>
-  <body>
-
-    <div>
-      
-
-
-
-      <!-- form area -->
-      <img src="assets/img/my-tax-rocket.svg" alt="rocket" class="rocket">
-      <h1>Einkommenssteuer berechnen<br>war noch nie so einfach</h1>
-      <p class="sub-title">Geben Sie unten Ihre Daten ein</p>
-      <form action="return false">
-        <div>
-
-        <div class="display-flex mb">
-
-            <div class="left jahr">Jahr</div>
-
-            <div class="right">
-                    <select id="year" name="year">
-                        <option value="2020">2020</option>
-                        <option value="2019" selected>2019</option>
-                        <option value="2018">2018</option>
-                    </select>
-                </div>
-        </div>
-
-        <div class="display-flex mb">
-          <div class="left art">Art der Veranlagung</div>
-          <div class="right">
-                <input
-                type="radio"
-                id="single"
-                name="assessment-type"
-                value="single"
-                />
-                <label for="single">Einzelveranlagung</label><br />
-
-                <input
-                type="radio"
-                id="couple"
-                name="assessment-type"
-                value="couple"
-                />
-                <label for="couple">Zusammenveranlagung</label>
-          </div>
-        </div>
-
-        <div class="display-flex mb">
-            <div class="left einkommen">zu versteurndes Einkommen</div>
-            <div class="right input-icon"><input type="number" id="profit" name="profit"><i>€</i></div>
-        </div>
-
-        <div class="display-flex mb">
-            <div class="left kirche">Kirchensteuer</div>
-            <div class="right">
-                <select id="k-steuer" name="k-steuer">
-                    <option value="0" selected>keine</option>
-                    <option value="8" >8% (Bayern / BaWü) </option>
-                    <option value="9">9 (übrige)</option>
-                </select>
-            </div>
-        </div>
-      </form>
-
-      <a href="#" class="btn" onclick="calculateTax()">Berechnen</a>
-    </div>
-
-    <!-- end form area -->
-
-    <!-- result -->
-    <div class="display-flex mb">
-      <div class="left">Einkommensteuer:</div> <div class="right" id="result">12345EUR</div>
-    </div>
-
-    <div class="display-flex mb">
-        <div class="left">Solidaritätszuschlag:</div>  <div class="right" id="soli"> 12345EUR</div>
-    </div>
-
-    <div class="display-flex mb">
-        <div class="left">Kirchensteuer:</div>
-        <div class="right" id="kirche">12345EUR</div>
-    </div>
-    <!-- / result -->
-
-
-
-    <script>
-      function calculateTax() {
-        let taxYear = parseInt(document.getElementById("year").value)
-        let assessmentType = document.querySelector("input[name=assessment-type]:checked").value
-        let taxableIncome = parseInt(document.getElementById("profit").value)
-        let kirchensteuerRate = parseInt(document.getElementById("k-steuer").value)
-        let taxLiability;
-        let soli;
-        let kirchensteuer;
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=, initial-scale=1.0" />
+        <link rel="stylesheet" href="assets/css/style.css" />
+        <script src="https://kit.fontawesome.com/08168b175b.js" crossorigin="anonymous"></script>
+        <title>SteuerHero</title>
+        <style>
         
-        if (assessmentType === "couple") {
-          taxableIncome /= 2;
-        }
-
-switch(taxYear) {
-    case 2020: {
-        if (taxableIncome <= 9408) {
-            taxLiability = 0;
-          } else if (taxableIncome >= 9409 && taxableIncome <= 14532) {
-            let y = (taxableIncome - 9408) / 10000;
-            taxLiability = (972.87 * y + 1400) * y;
-          } else if (taxableIncome >= 14533 && taxableIncome <= 57051) {
-            let z = (taxableIncome - 14532) / 10000;
-            taxLiability = (212.02 * z + 2397) * z + 972.79;
-          } else if (taxableIncome >= 57052 && taxableIncome <= 270500) {
-            taxLiability = 0.42 * taxableIncome - 8963.74;
-          } else if (taxableIncome >= 270501) {
-            taxLiability = 0.45 * taxableIncome - 17078.74;
-          }
-    break;
+@media only screen and (max-width: 887px) {
+    div.content{
+        flex-direction: column;
     }
-    case 2019: {
-        if (taxableIncome <= 9168) {
-            taxLiability = 0;
-          } else if (taxableIncome >= 9169 && taxableIncome <= 14254) {
-            let y = (taxableIncome - 9168) / 10000;
-            taxLiability = (980.14 * y + 1400) * y;
-          } else if (taxableIncome >= 14255 && taxableIncome <= 55960) {
-            let z = (taxableIncome - 14254) / 10000;
-            taxLiability = (216.06 * z + 2397) * z + 965.58;
-          } else if (taxableIncome >= 55961 && taxableIncome <= 265326) {
-            taxLiability = 0.42 * taxableIncome - 8780.9;
-          } else if (taxableIncome >= 265327) {
-            taxLiability = 0.45 * taxableIncome - 16740.68;
-          }
-    break;
+    div.area-right{
+        width: 100%;
     }
-    case 2018: {
-        if (taxableIncome <= 9000) {
-            taxLiability = 0;
-          } else if (taxableIncome >= 9001 && taxableIncome <= 13996) {
-            let y = (taxableIncome - 9000) / 10000;
-            taxLiability = (997.8 * y + 1400) * y;
-          } else if (taxableIncome >= 13997 && taxableIncome <= 54949) {
-            let z = (taxableIncome - 13996) / 10000;
-            taxLiability = (220.13 * z + 2397) * z + 948.49;
-          } else if (taxableIncome >= 54950 && taxableIncome <= 260532) {
-            taxLiability = 0.42 * taxableIncome - 8621.75;
-          } else if (taxableIncome >= 260553) {
-            taxLiability = 0.45 * taxableIncome - 16437.7;
-          }
-    break;
+    div.area-left{
+        width: 100%;
     }
 }
-        // Zusammenveranlagung, Soli und KSt.
-        if (assessmentType === "couple") {
-          taxLiability *= 2;
-        }
-        
-        soli = taxLiability * 0.055
-        kirchensteuer = taxLiability * (kirchensteuerRate / 100)
+        </style>
+    </head>
+    <body>
+        <header>
 
-        // Output 
-        document.getElementById("result").innerHTML = taxLiability.toFixed(0) + ' €'
-        document.getElementById('soli').innerHTML = soli.toFixed(0) + ' €'
-        document.getElementById('kirche').innerHTML = kirchensteuer.toFixed(0) + ' €'
-      } 
-    </script>
-  </body>
+            <!-- social -->
+<div class="social">
+    <div class="container display-flex">
+        <div><span>info@steuerhero.com</span>  |  <span>0123 45678943</span></div>
+        
+    
+                <div>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook-square"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram-square"></i></a>
+                </div>
+    
+    </div>   
+</div>
+<!-- /social -->
+
+<!-- nav area -->
+
+    <div class="container display-flex nav-area">
+
+    <div>
+        <a href="#" class="logo">Steuer<span>Hero</span></a>
+    </div>
+                <div>
+                    <i class="fas fa-address-card fa-fw"></i><a href="#">Impressum</a>
+          
+                </div>
+    </div>   
+
+        </header>
+        <main>
+            <div class="container">
+
+                <div class="display-flex content">
+                    <!-- area-left -->
+                    <div class="area-left">
+                        <!-- form area -->
+                    <img src="assets/img/my-tax-rocket.svg" alt="rocket" class="rocket">
+                    <h1>Einkommenssteuer berechnen<br>war noch nie so einfach</h1>
+                    <p class="sub-title">Geben Sie unten Ihre Daten ein</p>
+                    <form>
+                        <div>
+                            <div class="display-flex mb">
+                                <div class="left jahr">Jahr</div>
+                                <div class="right">
+                                    <select id="year" name="year">
+                                        <option value="2020">2020</option>
+                                        <option value="2019" selected>2019</option>
+                                        <option value="2018">2018</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="display-flex mb">
+                                <div class="left art">Art der Veranlagung</div>
+                                <div class="right">
+                                    <input
+                                        type="radio"
+                                        id="single"
+                                        name="assessment-type"
+                                        value="single"
+                                        />
+                                    <label for="single">Einzelveranlagung</label><br />
+                                    <input
+                                        type="radio"
+                                        id="couple"
+                                        name="assessment-type"
+                                        value="couple"
+                                        />
+                                    <label for="couple">Zusammenveranlagung</label>
+                                </div>
+                            </div>
+                            <div class="display-flex mb">
+                                <div class="left einkommen">zvE</div>
+                                <div class="right input-icon"><input type="number" id="profit" name="profit"><i>€</i></div>
+                            </div>
+                            <div class="display-flex mb">
+                                <div class="left kirche">Kirchensteuer</div>
+                                <div class="right">
+                                    <select id="k-steuer" name="k-steuer">
+                                        <option value="0" selected>keine</option>
+                                        <option value="8" >8% (Bayern / BaWü) </option>
+                                        <option value="9">9 (übrige)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <a href="#" class="btn" onclick="calculateTax()">Berechnen</a>
+                    <!-- end form area -->
+                    <!-- result -->
+                    <div class="display-flex mb">
+                    <div class="left result">Einkommensteuer:</div> <div class="right" id="result"></div>
+                    </div>
+                    <div class="display-flex mb">
+                    <div class="left result">Solidaritätszuschlag:</div>  <div class="right" id="soli"></div>
+                    </div>
+                    <div class="display-flex mb">
+                    <div class="left result">Kirchensteuer:</div>
+                    <div class="right" id="kirche"></div>
+                    </div>
+                    <!-- / result -->
+                    </div>
+
+                    <div class="area-right">
+                        <img src="assets/img/finance.png" alt="steuer icons">
+                    </div>
+                </div>
+
+                   
+                    
+            
+                    
+                
+            </div>
+        </main>
+        <footer> <small>&copy; steuerhero.com 2020</small></footer>
+        <script src="assets/js/main.js"></script>
+    </body>
 </html>
